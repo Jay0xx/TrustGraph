@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useIntuition } from '@/context/IntuitionContext'
 import { toast } from 'react-hot-toast'
 import { parseEther } from 'viem'
+import { multiVaultDeposit } from '@0xintuition/protocol'
 
 interface AttestData {
     id: `0x${string}`
@@ -9,7 +10,7 @@ interface AttestData {
 }
 
 export function useAttest() {
-    const { sdk, writeConfig } = useIntuition()
+    const { writeConfig } = useIntuition()
     const queryClient = useQueryClient()
 
     return useMutation({
@@ -18,15 +19,19 @@ export function useAttest() {
                 throw new Error('Wallet not connected or invalid configuration')
             }
             const value = parseEther(amount)
-            return sdk.multiVaultDeposit(writeConfig, {
+            const txHash = await multiVaultDeposit(writeConfig, {
                 args: [writeConfig.walletClient.account.address, id, 1n, 0n],
                 value,
             })
+            if (!txHash) {
+                throw new Error('Deposit transaction failed')
+            }
+            return txHash
         },
         onSuccess: () => {
             toast.success('Attestation successful!')
-            queryClient.invalidateQueries({ queryKey: ['GetAtomDetails'] })
-            queryClient.invalidateQueries({ queryKey: ['GetTriples'] })
+            queryClient.invalidateQueries({ queryKey: ['GetAtom'] })
+            queryClient.invalidateQueries({ queryKey: ['GetTriplesWithPositions'] })
         },
         onError: (error: any) => {
             console.error('Error attesting:', error)
