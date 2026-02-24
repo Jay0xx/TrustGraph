@@ -14,12 +14,12 @@ export function useAttest() {
 
     return useMutation({
         mutationFn: async ({ id, amount }: AttestData) => {
-            if (!writeConfig) {
+            if (!writeConfig || !writeConfig.walletClient.account) {
                 throw new Error('Wallet not connected or invalid configuration')
             }
             const value = parseEther(amount)
-            return sdk.deposit(writeConfig, {
-                args: [id, writeConfig.walletClient.account.address],
+            return sdk.multiVaultDeposit(writeConfig, {
+                args: [writeConfig.walletClient.account.address, id, 1n, 0n],
                 value,
             })
         },
