@@ -1,20 +1,13 @@
 import { useMemo } from 'react'
-import { useGetAtomDetailsQuery } from '@0xintuition/graphql'
-import { useIntuition } from '@/context/IntuitionContext'
-import { useAccount } from 'wagmi'
-
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+import { useGetAtomQuery } from '@0xintuition/graphql'
 
 export function useAtomDetails(atomId: string) {
-    const { address } = useAccount()
-
-    const { data, isLoading, error, refetch } = useGetAtomDetailsQuery(
+    const { data, isLoading, error, refetch } = useGetAtomQuery(
         {
             id: atomId,
-            userPositionAddress: address ?? ZERO_ADDRESS,
         },
         {
-            enabled: !!atomId,
+            enabled: !!atomId && atomId.length > 0,
         }
     )
 

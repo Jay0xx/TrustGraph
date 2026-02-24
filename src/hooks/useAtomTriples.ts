@@ -1,16 +1,17 @@
 import { useMemo } from 'react'
 import { useGetTriplesWithPositionsQuery } from '@0xintuition/graphql'
-import { useIntuition } from '@/context/IntuitionContext'
+
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 export function useAtomTriples(atomId: string) {
     const { data, isLoading, error, refetch } = useGetTriplesWithPositionsQuery(
         {
             where: { subject_id: { _eq: atomId } },
-            limit: 50, // Fetch more for better ranking
+            limit: 50,
+            address: ZERO_ADDRESS, // Required by _ilike filter; prevents null errors
         },
         {
-            enabled: !!atomId,
-            // Refresh on focal change if needed
+            enabled: !!atomId && atomId.length > 0,
         }
     )
 
