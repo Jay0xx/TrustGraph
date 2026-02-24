@@ -56,8 +56,8 @@ export default function CreateAtomPage() {
             })
 
             // The result usually contains the transaction hash or the new atom data
-            // For now we'll assume success since the hook handles toast and redirection can happen here
             console.log('Atom creation result:', result)
+            toast.success('Atom created! It may take a minute for descriptions to sync from IPFS.')
 
             // In a real scenario, we might want to wait for the tx to be indexed to get the ID
             // But for the MVP, we'll just show success and maybe redirect to home or points

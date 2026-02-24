@@ -20,7 +20,6 @@ export function useCreateAtom() {
             return sdk.createAtomFromString(writeConfig, name as `${string}`)
         },
         onSuccess: (data) => {
-            toast.success('Atom created successfully!')
             queryClient.invalidateQueries({ queryKey: ['GlobalSearch'] })
         },
         onError: (error: any) => {

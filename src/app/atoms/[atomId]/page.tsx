@@ -116,7 +116,9 @@ Source: TrustGraph / Intuition Protocol (Intuition Testnet Beta)`
                                 {(atom as any)?.value?.thing?.description ||
                                     (atom as any)?.value?.person?.description ||
                                     (atom as any)?.value?.organization?.description ||
-                                    ((atom as any)?.data?.startsWith('ipfs://') ? '' : (atom as any)?.data) ||
+                                    ((atom as any)?.data?.startsWith('ipfs://')
+                                        ? `Syncing metadata from IPFS: ${(atom as any).data.replace('ipfs://', '')}`
+                                        : (atom as any)?.data) ||
                                     'No description provided for this atom.'}
                             </p>
 
