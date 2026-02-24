@@ -200,7 +200,7 @@ export default function Home() {
             <p className="font-medium text-foreground/80">TrustGraph Beta | Feedback Welcome!</p>
             <FeedbackButton variant="link" className="h-auto p-0" />
           </div>
-          <p className="text-[10px]">© 2024 TrustGraph MVP. Experimental AI-ready knowledge verification.</p>
+          <p className="text-[10px]">© 2026 TrustGraph MVP. Experimental AI-ready knowledge verification.</p>
         </div>
       </footer>
     </div>
