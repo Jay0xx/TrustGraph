@@ -50,9 +50,10 @@ export default function CreateAtomPage() {
         }
 
         try {
-            // Note: useCreateAtom current implementation only takes a string (label)
-            // We will pass the label for now. If metadata is supported, we'd pass an object.
-            const result = await createAtomMutation.mutateAsync(values.label)
+            const result = await createAtomMutation.mutateAsync({
+                name: values.label,
+                description: values.description,
+            })
 
             // The result usually contains the transaction hash or the new atom data
             // For now we'll assume success since the hook handles toast and redirection can happen here

@@ -7,11 +7,17 @@ export function useCreateAtom() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async (data: string) => {
+        mutationFn: async ({ name, description }: { name: string; description?: string }) => {
             if (!writeConfig) {
                 throw new Error('Wallet not connected or invalid configuration')
             }
-            return sdk.createAtomFromString(writeConfig, data as `${string}`)
+            if (description) {
+                return sdk.createAtomFromThing(writeConfig, {
+                    name,
+                    description,
+                })
+            }
+            return sdk.createAtomFromString(writeConfig, name as `${string}`)
         },
         onSuccess: (data) => {
             toast.success('Atom created successfully!')

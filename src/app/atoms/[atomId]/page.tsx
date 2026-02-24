@@ -73,7 +73,11 @@ Source: TrustGraph / Intuition Protocol (Intuition Testnet Beta)`
         )
     }
 
-    const atomLabel = (atom as any)?.label || 'Unnamed Atom'
+    const atomLabel = (atom as any)?.label ||
+        (atom as any)?.value?.thing?.name ||
+        (atom as any)?.value?.person?.name ||
+        (atom as any)?.value?.organization?.name ||
+        'Unnamed Atom'
 
     return (
         <div className="container mx-auto py-10 px-4 max-w-5xl">
@@ -109,7 +113,11 @@ Source: TrustGraph / Intuition Protocol (Intuition Testnet Beta)`
                                 )}
                             </div>
                             <p className="text-xl text-muted-foreground leading-relaxed">
-                                {(atom as any)?.data || 'No description provided for this atom.'}
+                                {(atom as any)?.value?.thing?.description ||
+                                    (atom as any)?.value?.person?.description ||
+                                    (atom as any)?.value?.organization?.description ||
+                                    ((atom as any)?.data?.startsWith('ipfs://') ? '' : (atom as any)?.data) ||
+                                    'No description provided for this atom.'}
                             </p>
 
                             <div className="flex flex-wrap gap-4 pt-4">

@@ -17,7 +17,7 @@ export function useSearchAtoms(query: string) {
         return (data?.atoms || []).map((atom: any) => ({
             id: atom.term_id,
             label: atom.label || atom.value?.thing?.name || atom.value?.person?.name || atom.value?.organization?.name || 'Unnamed Atom',
-            description: atom.data || atom.value?.thing?.description || atom.value?.person?.description || atom.value?.organization?.description || 'No description available.',
+            description: (atom.value?.thing?.description || atom.value?.person?.description || atom.value?.organization?.description || (atom.data?.startsWith('ipfs://') ? '' : atom.data)) || 'No description available.',
             triplesCount: (atom as any).term?.vaults?.reduce((acc: number, v: any) => acc + Number(v.position_count || 0), 0) || 0,
         }))
     }, [data])
