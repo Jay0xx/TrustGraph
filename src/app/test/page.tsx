@@ -25,7 +25,7 @@ export default function TestPage() {
 
     const handleCreateAtom = (e: React.FormEvent) => {
         e.preventDefault()
-        createAtom.mutate(atomData)
+        createAtom.mutate({ name: atomData })
     }
 
     const handleCreateTriple = (e: React.FormEvent) => {
