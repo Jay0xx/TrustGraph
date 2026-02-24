@@ -79,7 +79,7 @@ export default function TestPage() {
                                     ))
                                 ) : atoms.length > 0 ? (
                                     atoms.map((atom: any) => (
-                                        <Card key={atom.term_id} className="group overflow-hidden border-border/40 hover:border-primary/50 transition-all">
+                                        <Card key={atom.id} className="group overflow-hidden border-border/40 hover:border-primary/50 transition-all">
                                             <div className="p-4 flex items-center justify-between">
                                                 <div className="flex items-center gap-3">
                                                     <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
@@ -87,9 +87,7 @@ export default function TestPage() {
                                                     </div>
                                                     <div>
                                                         <p className="font-semibold">{atom.label || 'Unnamed Atom'}</p>
-                                                        <p className="text-xs text-muted-foreground font-mono truncate max-w-[200px]">
-                                                            {atom.term_id}
-                                                        </p>
+                                                        {atom.id}
                                                     </div>
                                                 </div>
                                                 <div className="flex gap-2">
@@ -98,7 +96,7 @@ export default function TestPage() {
                                                         size="sm"
                                                         className="rounded-full"
                                                         onClick={() => {
-                                                            attest.mutate({ id: atom.term_id, amount: attestAmount })
+                                                            attest.mutate({ id: atom.id, amount: attestAmount })
                                                         }}
                                                         disabled={attest.isPending}
                                                     >
@@ -205,6 +203,6 @@ export default function TestPage() {
                     </Card>
                 </TabsContent>
             </Tabs>
-        </div>
+        </div >
     )
 }

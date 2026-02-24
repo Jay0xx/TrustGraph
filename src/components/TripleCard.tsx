@@ -129,10 +129,10 @@ export function TripleCard({ triple }: TripleCardProps) {
                                             <div key={idx} className="flex justify-between text-[10px] items-start border-b border-muted last:border-0 pb-1.5">
                                                 <div className="flex flex-col">
                                                     <span className="font-mono text-foreground">
-                                                        {p.label || `${p.account.slice(0, 6)}...${p.account.slice(-4)}`}
+                                                        {p.label || (p.account ? `${p.account.slice(0, 6)}...${p.account.slice(-4)}` : 'Unknown')}
                                                     </span>
                                                     <span className="text-[8px] text-muted-foreground font-mono truncate max-w-[120px]">
-                                                        {p.account}
+                                                        {p.account || '0x...'}
                                                     </span>
                                                 </div>
                                                 <span className="font-bold text-primary">{p.shares.toFixed(4)} $T</span>

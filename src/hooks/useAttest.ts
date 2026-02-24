@@ -20,7 +20,7 @@ export function useAttest() {
             }
             const value = parseEther(amount)
             const txHash = await multiVaultDeposit(writeConfig, {
-                args: [writeConfig.walletClient.account.address, id, 1n, 0n],
+                args: [writeConfig.walletClient.account.address, id as `0x${string}`, 1n, 0n],
                 value,
             })
             if (!txHash) {

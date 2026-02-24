@@ -6,12 +6,12 @@ const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 export function useAtomTriples(atomId: string) {
     const { data, isLoading, error, refetch } = useGetTriplesWithPositionsQuery(
         {
-            where: { subject_id: { _eq: atomId } },
+            where: { subject_id: { _eq: atomId || '' } },
             limit: 50,
             address: ZERO_ADDRESS, // Required by _ilike filter; prevents null errors
         },
         {
-            enabled: !!atomId && atomId.length > 0,
+            enabled: !!atomId && atomId.length > 5,
         }
     )
 

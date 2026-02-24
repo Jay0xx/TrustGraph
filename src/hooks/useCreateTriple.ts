@@ -24,7 +24,7 @@ export function useCreateTriple() {
         },
         onSuccess: () => {
             toast.success('Triple created successfully!')
-            queryClient.invalidateQueries({ queryKey: ['GetTriples'] })
+            queryClient.invalidateQueries({ queryKey: ['GetTriplesWithPositions'] })
         },
         onError: (error: any) => {
             console.error('Error creating triple:', error)
