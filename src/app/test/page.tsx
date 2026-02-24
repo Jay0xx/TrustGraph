@@ -16,7 +16,7 @@ export default function TestPage() {
     const [searchQuery, setSearchQuery] = useState('')
     const [atomData, setAtomData] = useState('')
     const [triple, setTriple] = useState({ subject: '', predicate: '', object: '' })
-    const [attestAmount, setAttestAmount] = useState('0.1')
+    const [attestAmount, setAttestAmount] = useState('0.001')
 
     const { atoms, isLoading: isSearching } = useSearchAtoms(searchQuery)
     const createAtom = useCreateAtom()

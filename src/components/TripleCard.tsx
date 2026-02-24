@@ -33,7 +33,7 @@ export function TripleCard({ triple }: TripleCardProps) {
     const attestMutation = useAttest()
 
     const handleEndorse = async () => {
-        const amount = prompt('Enter amount to stake (ETH):', '0.01')
+        const amount = prompt('Enter amount to stake (ETH):', '0.001')
         if (amount && !isNaN(Number(amount))) {
             await attestMutation.mutateAsync({
                 id: triple.id as `0x${string}`,
