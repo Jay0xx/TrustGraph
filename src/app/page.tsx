@@ -1,5 +1,7 @@
 'use client'
 
+// Deployment Verification: 2026-02-24 19:16
+
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
