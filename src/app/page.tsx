@@ -34,8 +34,10 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center pb-20">
       {/* Hero Section */}
-      <section className="w-full py-16 md:py-28 lg:py-36 bg-gradient-to-b from-primary/5 via-background to-background border-b">
-        <div className="container px-4 md:px-6 mx-auto">
+      <section className="w-full py-16 md:py-28 lg:py-36 bg-gradient-to-b from-primary/5 via-background to-background border-b relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+
+        <div className="container px-4 md:px-6 mx-auto relative z-10">
           <div className="flex flex-col items-center space-y-10 text-center">
             <div className="space-y-4">
               <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary/10 text-primary mb-4">
@@ -57,12 +59,13 @@ export default function Home() {
               <Input
                 type="text"
                 placeholder="Search atoms (e.g., 'Bitcoin', 'Intuition', 'Reliable')"
-                className="pl-12 py-7 text-lg rounded-2xl border-2 shadow-sm focus-visible:ring-primary h-14 bg-background"
+                className="pl-12 py-7 text-lg rounded-2xl border-2 shadow-sm focus-visible:ring-primary h-14 bg-background transition-all focus:scale-[1.01]"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
 
+            {/* Action buttons */}
             <div className="flex items-center gap-4">
               <Button asChild variant="outline" className="rounded-full px-8 shadow-sm">
                 <Link href="/create-atom">
@@ -71,6 +74,24 @@ export default function Home() {
               </Button>
               <FeedbackButton variant="secondary" className="rounded-full px-8" />
             </div>
+
+            {/* AI Summary Teaser Card */}
+            <Card className="w-full max-w-xl border-primary/20 bg-gradient-to-r from-primary/8 via-primary/5 to-transparent shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-all duration-500 group animate-in fade-in slide-in-from-bottom-4 duration-1000">
+              <CardContent className="flex items-center gap-4 py-4 px-5">
+                <div className="p-2.5 rounded-xl bg-primary/10 border border-primary/20 group-hover:bg-primary/15 transition-colors flex-shrink-0">
+                  <Sparkles className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1 min-w-0 space-y-0.5">
+                  <p className="text-sm font-semibold text-foreground/90">
+                    ✨ Verifiable AI Summaries
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Explore any Atom → get a copyable, trust-ranked summary of verified claims to paste into ChatGPT, Claude, or Gemini.
+                  </p>
+                </div>
+                <ArrowRight className="h-4 w-4 text-primary/50 group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0" />
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>

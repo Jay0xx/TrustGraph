@@ -9,6 +9,7 @@ import { CreateTripleDialog } from '@/components/CreateTripleDialog'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Badge } from '@/components/ui/badge'
+import { AISummaryBox } from '@/components/AISummaryBox'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Separator } from '@/components/ui/separator'
@@ -22,7 +23,9 @@ import {
     Copy,
     ChevronRight,
     Home,
-    AlertCircle
+    AlertCircle,
+    TrendingUp,
+    Bot,
 } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'react-hot-toast'
@@ -37,24 +40,6 @@ export default function AtomDetailPage() {
 
     const isLoading = isAtomLoading || isTriplesLoading
     const error = atomError || triplesError
-
-    const copyAISummary = () => {
-        if (!atom || triples.length === 0) return
-
-        const label = (atom as any).label || 'Unnamed Atom'
-        const summary = `Verified facts about "${label}" (ID: ${atomId}):
-${triples.slice(0, 10).map((t: any, i: number) => {
-            const provenanceStr = t.provenance.length > 0
-                ? ` (Endorsed by ${t.attestersCount} accounts)`
-                : ' (Unendorsed)'
-            return `${i + 1}. ${t.predicate.label || 'relates to'} ${t.object.label || 'unknown'} - Trust: ${t.trustSignal.toFixed(4)} $TRUST${provenanceStr}`
-        }).join('\n')}
-
-Source: TrustGraph / Intuition Protocol (Intuition Testnet Beta)`
-
-        navigator.clipboard.writeText(summary)
-        toast.success('Verifiable summary copied for AI!')
-    }
 
     if (error) {
         return (
@@ -165,20 +150,29 @@ Source: TrustGraph / Intuition Protocol (Intuition Testnet Beta)`
                         </CardContent>
                     </Card>
 
-                    <Button
-                        onClick={copyAISummary}
-                        disabled={isLoading || triples.length === 0}
-                        className="w-full gap-2 shadow-lg hover:shadow-primary/20 transition-all font-semibold"
-                    >
-                        <Sparkles className="h-4 w-4" />
-                        Summarize for AI
-                    </Button>
+                    {/* Quick AI summary call-to-action for sidebar */}
+                    {!isLoading && triples.length > 0 && (
+                        <a
+                            href="#ai-summary-section"
+                            className="flex items-center gap-3 p-3 rounded-lg bg-primary/5 border border-primary/15 hover:bg-primary/10 hover:border-primary/25 transition-all cursor-pointer group"
+                        >
+                            <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                                <Bot className="h-4 w-4 text-primary" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-xs font-semibold text-foreground/90">AI Summary Ready</p>
+                                <p className="text-[10px] text-muted-foreground">Copy verifiable facts for LLMs ↓</p>
+                            </div>
+                            <Sparkles className="h-3.5 w-3.5 text-primary/50 group-hover:text-primary transition-colors" />
+                        </a>
+                    )}
+
                     <FeedbackButton variant="outline" className="w-full" />
                 </div>
             </div>
 
-            {/* Relationships Section */}
-            <div className="space-y-6">
+            {/* Relationships Section – Triples list */}
+            <div className="space-y-6 mb-12">
                 <div className="flex items-center justify-between border-b pb-4">
                     <div className="space-y-1">
                         <h2 className="text-2xl font-bold flex items-center gap-2">
@@ -215,6 +209,24 @@ Source: TrustGraph / Intuition Protocol (Intuition Testnet Beta)`
                         </div>
                     </div>
                 )}
+            </div>
+
+            {/* AI Summary Section – placed after triples for full context visibility */}
+            <div className="mb-12">
+                <div className="flex items-center gap-2 mb-4">
+                    <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground font-medium uppercase tracking-widest">
+                        <Sparkles className="h-3 w-3 text-primary" />
+                        AI-Powered Insights
+                    </div>
+                    <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+                </div>
+                <AISummaryBox
+                    atomLabel={atomLabel}
+                    atomId={atomId}
+                    triples={triples}
+                    isLoading={isLoading}
+                />
             </div>
         </div>
     )
